@@ -1,0 +1,52 @@
+[gd_scene load_steps=9 format=3 uid="uid://dop31hpbg52mr"]
+
+[ext_resource type="Shader" uid="uid://b3k64m3v2l7oy" path="res://shader_dissolve.tres" id="1_11tvy"]
+
+[sub_resource type="CameraAttributesPractical" id="CameraAttributesPractical_0w6xi"]
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_qfj12"]
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_jr1p8"]
+noise = SubResource("FastNoiseLite_qfj12")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_7hr8k"]
+render_priority = 0
+shader = ExtResource("1_11tvy")
+shader_parameter/Strength = 2.0
+shader_parameter/LightColor = Color(0, 1, 1, 1)
+shader_parameter/Speed = 2.0
+shader_parameter/Albedo = SubResource("NoiseTexture2D_jr1p8")
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_l7g5n"]
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_d71fa"]
+noise = SubResource("FastNoiseLite_l7g5n")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_vvygr"]
+render_priority = 0
+shader = ExtResource("1_11tvy")
+shader_parameter/Strength = 2.0
+shader_parameter/LightColor = Color(0, 1, 1, 1)
+shader_parameter/Speed = 2.0
+shader_parameter/Albedo = SubResource("NoiseTexture2D_d71fa")
+
+[node name="Main" type="Node"]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+camera_attributes = SubResource("CameraAttributesPractical_0w6xi")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.722675, 0.447517, -0.526754, -7.44567e-09, 0.762099, 0.647461, 0.691188, -0.467903, 0.55075, -3.17014, 2.25808, 2.18411)
+directional_shadow_blend_splits = true
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(0.756789, -0.0115051, -0.653558, -0.00492443, 0.999716, -0.023301, 0.653641, 0.0208523, 0.756518, -1.25367, 0.740804, 1.88308)
+fov = 81.9379
+
+[node name="Box" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+material_override = SubResource("ShaderMaterial_7hr8k")
+
+[node name="CSGBox3D" type="CSGBox3D" parent="."]
+transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, 0, -1.5, 0)
+material_override = SubResource("ShaderMaterial_vvygr")
